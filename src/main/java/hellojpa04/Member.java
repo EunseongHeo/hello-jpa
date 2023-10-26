@@ -1,8 +1,6 @@
 package hellojpa04;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -23,17 +21,18 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-//    - LocalDate, LocalDateTime을 사용할 때는 생략 가능(최신 하이버네이트 지원)
-
-    private LocalDate testLocalDate;
-    private LocalDateTime testLocalDateTime;
 
     @Lob
     private String description;
+//    private byte[] description;
+//  	- 매핑하는 필드 타입이 문자면 CLOB 매핑, 나머지는 BLOB 매핑
+//		- CLOB: String, char[], java.sql.CLOB
+//		- BLOB: byte[],         java.sql.BLOB
 
     @Transient
     private int temp;
