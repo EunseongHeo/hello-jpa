@@ -1,6 +1,8 @@
 package hellojpa04;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -18,19 +20,17 @@ public class Member {
 
     private Integer age;
 
-//    @Enumerated
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
-//    EnumType.ORDINAL  <-- enum 순서를 데이터베이스에 저장 (DEFAULT)
-//        - 운영에서는 사용하지 말 것!!!
-//        - 추가된 요구사항으로 RoleType에 대하여 상수가 추가되었을 때 큰 혼란이 야기될 수 있음
-//    EnumType.STRING   <-- enum 이름을 데이터베이스에 저장
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date createDate;
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
+//    - LocalDate, LocalDateTime을 사용할 때는 생략 가능(최신 하이버네이트 지원)
+
+    private LocalDate testLocalDate;
+    private LocalDateTime testLocalDateTime;
 
     @Lob
     private String description;
@@ -39,38 +39,5 @@ public class Member {
     private int temp;
 
     public Member(){}
-
-//    @Enumerated 속성 비교를 위해 setters 만 생성
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public void setRoleType(RoleType roleType) {
-        this.roleType = roleType;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setTemp(int temp) {
-        this.temp = temp;
-    }
 
 }
