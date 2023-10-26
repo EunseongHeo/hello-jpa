@@ -14,9 +14,6 @@ public class Main {
         tx.begin();
         try {
 
-            Member member = new Member(1L, "A");
-            em.persist(member);
-
             tx.commit();
         } catch (Exception e){
             tx.rollback();
@@ -27,3 +24,17 @@ public class Main {
         emf.close();
     }
 }
+
+//[결과값-콘솔]
+//Hibernate:
+//
+//        create table Member (
+//        id bigint not null,
+//        age integer,
+//        createDate timestamp,
+//        description clob,
+//        lastModifiedDate timestamp,
+//        roleType varchar(255),
+//        name varchar(255),
+//        primary key (id)
+//        )
