@@ -14,13 +14,6 @@ public class Main {
         tx.begin();
         try {
 
-            Member member = new Member();
-            member.setId(1L);
-            member.setUsername("A");
-            member.setRoleType(RoleType.USER);
-
-            em.persist(member);
-
             tx.commit();
         } catch (Exception e){
             tx.rollback();
@@ -32,42 +25,25 @@ public class Main {
     }
 }
 
-//[@Enumerated(EnumType.ORDINAL) 경우의 결과값-콘솔]
+//[결과값-콘솔]
 //Hibernate:
 //
 //    create table Member (
 //        primary key (id)
 //        id bigint not null,
-//        age integer,
-//        createDate timestamp,
-//        description clob,
-//        lastModifiedDate timestamp,
-//***     roleType integer,     ***
 //        name varchar(255) not null,
-//    )
-//=============================================================================
-//[@Enumerated(EnumType.ORDINAL) 경우의 결과값-DB]
-//| ID | AGE | CREATEDATE | DESCRIPTION | LASTMODIFIEDDATE | ROLETYPE | NAME |
-//|----|-----|------------|-------------|------------------|----------|------|
-//| 1  | null| null       | null        | null             | 0        | A    |
-
-
-
-//[@Enumerated(EnumType.STRING) 경우의 결과값-콘솔]
-//Hibernate:
-//
-//    create table Member (
-//        primary key (id)
-//        id bigint not null,
 //        age integer,
-//        createDate timestamp,
+//        roleType varchar(255),
+//***     createDate timestamp,         ***
+//***     lastModifiedDate timestamp,   ***
+//***     testLocalDate date,           ***
+//***     testLocalDateTime timestamp,  ***
 //        description clob,
-//        lastModifiedDate timestamp,
-//***     roleType varchar(255),     ***
-//        name varchar(255) not null,
 //    )
-//=============================================================================
-//[@Enumerated(EnumType.STRING) 경우의 결과값-DB]
-//| ID | AGE | CREATEDATE | DESCRIPTION | LASTMODIFIEDDATE | ROLETYPE | NAME |
-//|----|-----|------------|-------------|------------------|----------|------|
-//| 1  | null| null       | null        | null             | USER     | A    |
+
+/*
+- createDate,        testLocalDate      타입이    date으로         같음을 확인할 수 있다.
+- lastModifiedDate,  testLocalDateTime  타입이    timestamp으로    같음을 확인할 수 있다.
+    *createDate       <-- TemporalType.DATE      | testLocalDate     <-- LocalDate 타입
+    *lastModifiedDate <-- TemporalType.TIMESTAMP | testLocalDateTime <-- LocalDateTime 타입
+*/
