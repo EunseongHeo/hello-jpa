@@ -14,6 +14,13 @@ public class Main {
         tx.begin();
         try {
 
+            Member member = new Member();
+            member.setId(1L);
+            member.setUsername("A");
+            member.setRoleType(RoleType.USER);
+
+            em.persist(member);
+
             tx.commit();
         } catch (Exception e){
             tx.rollback();
@@ -25,21 +32,42 @@ public class Main {
     }
 }
 
-//[결과값-콘솔]
+//[@Enumerated(EnumType.ORDINAL) 경우의 결과값-콘솔]
 //Hibernate:
 //
 //    create table Member (
-//        id bigint not null,
-//        age decimal(19,0),
-//        create_date timestamp,
-//        description clob,
-//        last_modified_date timestamp,
-//        roleType varchar(255),
-//        name varchar(100) default 'EMPTY' not null,
 //        primary key (id)
+//        id bigint not null,
+//        age integer,
+//        createDate timestamp,
+//        description clob,
+//        lastModifiedDate timestamp,
+//***     roleType integer,     ***
+//        name varchar(255) not null,
 //    )
-//
+//=============================================================================
+//[@Enumerated(EnumType.ORDINAL) 경우의 결과값-DB]
+//| ID | AGE | CREATEDATE | DESCRIPTION | LASTMODIFIEDDATE | ROLETYPE | NAME |
+//|----|-----|------------|-------------|------------------|----------|------|
+//| 1  | null| null       | null        | null             | 0        | A    |
+
+
+
+//[@Enumerated(EnumType.STRING) 경우의 결과값-콘솔]
 //Hibernate:
 //
-//    alter table Member
-//        add constraint create_last_modified_dates_unique unique (create_date, last_modified_date)
+//    create table Member (
+//        primary key (id)
+//        id bigint not null,
+//        age integer,
+//        createDate timestamp,
+//        description clob,
+//        lastModifiedDate timestamp,
+//***     roleType varchar(255),     ***
+//        name varchar(255) not null,
+//    )
+//=============================================================================
+//[@Enumerated(EnumType.STRING) 경우의 결과값-DB]
+//| ID | AGE | CREATEDATE | DESCRIPTION | LASTMODIFIEDDATE | ROLETYPE | NAME |
+//|----|-----|------------|-------------|------------------|----------|------|
+//| 1  | null| null       | null        | null             | USER     | A    |

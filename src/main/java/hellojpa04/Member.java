@@ -1,18 +1,9 @@
 package hellojpa04;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        name = "create_last_modified_dates_unique",
-                        columnNames = {"create_date", "last_modified_date"}
-                )
-        }
-)
 public class Member {
 //    [요구사항] - 필드와 컬럼 매핑
 //    1. 회원은 일반 회원과 관리자로 구분해야 한다.
@@ -22,34 +13,22 @@ public class Member {
     @Id
     private Long id;
 
-    @Column(name = "name", nullable = false, columnDefinition = "varchar(100) default 'EMPTY'")
+    @Column(name = "name", nullable = false)
     private String username;
-//    name 속성           <-- 필드와 매핑할 테이블의 컬럼 이름 (DEFAULT: 객체의 필드 이름)
-//    insertable 속성     <-- 등록 여부 (DEFAULT: true)
-//    updatable 속성      <-- 변경 여부 (DEFAULT: true)
-//    nullable 속성       <-- null 값의 허용 여부 (nullable = false 이면 NOT NULL) (DEFAULT: true, DDL-auto)
-//    unique 속성         <-- 한 컬럼에 간단히 유니크 제약조건을 걸 때 (DEFAULT: false)
-//                       <-- 보통 @Table(uniqueConstraints = ...) 으로 사용 (unique 제약 조건의 이름 지정 가능)
-//    columnDefinition   <--  (DEFAULT: 필드의 자바 타입과 DB 타입에 맞는 적절한 컬럼 타입, DDL-auto)
-//    length             <--  문자 길이 제약조건 - *String 타입만 (DEFAULT: 255, DDL-auto)
-//    precision          <--  소수점을 포함한 전체 자릿수 (DEFAULT: 19)
-//    scale              <--  소수의 자릿수 (DEFAULT: 2, DDL-auto)
-    //    ** precision & scale      : double, ﬂoat 타입에는 적용되지 않는다.
-    //                              : BigDecimal 타입 또는 BigInteger 타입에 해당
-    //    ** precision              : 아주 큰 숫자나 정밀한 소수를 다루어야 할 때 사용
-    //    ** scale                  : 아주 큰 숫자 또는 소수점 사용 시 사용
 
-    @Column(precision = 19)
-    private BigDecimal age;
+    private Integer age;
 
+//    @Enumerated
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
+//    EnumType.ORDINAL  <-- enum 순서를 데이터베이스에 저장 (DEFAULT)
+//        - 운영에서는 사용하지 말 것!!!
+//        - 추가된 요구사항으로 RoleType에 대하여 상수가 추가되었을 때 큰 혼란이 야기될 수 있음
+//    EnumType.STRING   <-- enum 이름을 데이터베이스에 저장
 
-    @Column(name = "create_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
 
-    @Column(name = "last_modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
 
@@ -60,5 +39,38 @@ public class Member {
     private int temp;
 
     public Member(){}
+
+//    @Enumerated 속성 비교를 위해 setters 만 생성
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setTemp(int temp) {
+        this.temp = temp;
+    }
 
 }
