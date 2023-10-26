@@ -28,13 +28,18 @@ public class Main {
 //[결과값-콘솔]
 //Hibernate:
 //
-//        create table Member (
+//    create table Member (
 //        id bigint not null,
-//        age integer,
-//        createDate timestamp,
+//        age decimal(19,0),
+//        create_date timestamp,
 //        description clob,
-//        lastModifiedDate timestamp,
+//        last_modified_date timestamp,
 //        roleType varchar(255),
-//        name varchar(255),
+//        name varchar(100) default 'EMPTY' not null,
 //        primary key (id)
-//        )
+//    )
+//
+//Hibernate:
+//
+//    alter table Member
+//        add constraint create_last_modified_dates_unique unique (create_date, last_modified_date)
