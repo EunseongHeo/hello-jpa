@@ -24,31 +24,3 @@ public class Main {
         emf.close();
     }
 }
-
-//[String 타입 결과값 - 콘솔]
-//Hibernate:
-//
-//    create table Member (
-//        id bigint not null,
-//        age integer,
-//        createDate timestamp,
-//***     description clob,     ***
-//        lastModifiedDate timestamp,
-//        roleType varchar(255),
-//        name varchar(255) not null,
-//        primary key (id)
-//    )
-
-//[byte[] 타입 결과값 - 콘솔]
-//Hibernate:
-//
-//    create table Member (
-//        id bigint not null,
-//        age integer,
-//        createDate timestamp,
-//***     description blob,     ***
-//        lastModifiedDate timestamp,
-//        roleType varchar(255),
-//        name varchar(255) not null,
-//        primary key (id)
-//    )

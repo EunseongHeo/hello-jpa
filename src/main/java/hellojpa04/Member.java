@@ -29,13 +29,12 @@ public class Member {
 
     @Lob
     private String description;
-//    private byte[] description;
-//  	- 매핑하는 필드 타입이 문자면 CLOB 매핑, 나머지는 BLOB 매핑
-//		- CLOB: String, char[], java.sql.CLOB
-//		- BLOB: byte[],         java.sql.BLOB
 
     @Transient
     private int temp;
+//    - 필드 매핑X
+//	  - 데이터베이스에 저장X, 조회X
+//	  - 주로 메모리상에서만 임시로 어떤 값을 보관하고 싶을 때 사용
 
     public Member(){}
 
