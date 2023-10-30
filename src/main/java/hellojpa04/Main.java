@@ -24,3 +24,20 @@ public class Main {
         emf.close();
     }
 }
+
+//[결과값 - 콘솔]
+//Hibernate:
+//
+//    create table Member (
+//        id bigint not null,
+//        age integer,
+//        createDate timestamp,
+//        description clob,
+//        lastModifiedDate timestamp,
+//        roleType varchar(255),
+//        name varchar(255) not null,
+//        primary key (id)
+//    )
+
+//JPA가 생성한 CREATE SQL을 보면 
+//Member 클래스의 int타입 temp 객체에 대한 내용은 없는 것을 확인할 수 있다.
