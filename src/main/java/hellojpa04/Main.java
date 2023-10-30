@@ -14,6 +14,13 @@ public class Main {
         tx.begin();
         try {
 
+            Member member = new Member();
+            //@Id를 사용하여 기본키를 직접 할당할 경우에는 아래와 같이 직접 할당하면 된다.
+            //이 경우, Member 클래스의 id 객체가 String 타입이어도 가능하다.
+            member.setId("ID_A");   //직접 할당
+            member.setUsername("C");
+            em.persist(member);
+
             tx.commit();
         } catch (Exception e){
             tx.rollback();
@@ -25,19 +32,7 @@ public class Main {
     }
 }
 
-//[결과값 - 콘솔]
-//Hibernate:
-//
-//    create table Member (
-//        id bigint not null,
-//        age integer,
-//        createDate timestamp,
-//        description clob,
-//        lastModifiedDate timestamp,
-//        roleType varchar(255),
-//        name varchar(255) not null,
-//        primary key (id)
-//    )
-
-//JPA가 생성한 CREATE SQL을 보면 
-//Member 클래스의 int타입 temp 객체에 대한 내용은 없는 것을 확인할 수 있다.
+//[결과값 - DB]
+//| ID   | AGE  | CREATEDATE | DESCRIPTION | LASTMODIFIEDDATE | ROLETYPE | NAME |
+//|------|------|------------|-------------|------------------|----------|------|
+//| ID_A | null | null       | null        | null             | null     | C    |

@@ -11,7 +11,7 @@ public class Member {
 //    3. 회원을 설명할 수 있는 필드가 있어야 한다. 이 필드는 길이 제한이 없다.
 
     @Id
-    private Long id;
+    private String id;
 
     @Column(name = "name", nullable = false)
     private String username;
@@ -35,4 +35,21 @@ public class Member {
 
     public Member(){}
 
+//    간단히 확인하기 위해 id 객체와 username객체에 대한
+//    getter 와 setter를 생성
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
