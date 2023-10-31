@@ -17,12 +17,7 @@
             <property name="hibernate.use_sql_comments" value="true"/>
             <property name="hibernate.jdbc.batch_size" value="10"/> <!-- 전송 쿼리 단위 설정 옵션 transactional write-behind -->
             <!-- 데이터베이스 스키마 자동 생성 -->
-            <property name="hibernate.hbm2ddl.auto" value="create" /> <!-- 기존테이블 DROP + CREATE -->
-            <!--<property name="hibernate.hbm2ddl.auto" value="create-update" />--> <!-- 종료시점에 테이블 DROP -->
-            <!--<property name="hibernate.hbm2ddl.auto" value="update" />--> <!-- 변경분만 반영 -->
-            <!-- 스테이징과 운영 서버는 validate 또는 none 옵션으로 사용하기를 권장 -->
-            <!--<property name="hibernate.hbm2ddl.auto" value="validate" />--> <!-- 엔티티와 테이블이 정상 매핑 확인만 - 콘솔 통해서 확인 -->
-            <!--<property name="hibernate.hbm2ddl.auto" value="none" />--> <!-- 엔티티와 테이블이 정상 매핑 확인만 -->
+            <property name="hibernate.hbm2ddl.auto" value="none" />
         </properties>
     </persistence-unit>
 </persistence>
