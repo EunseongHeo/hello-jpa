@@ -22,24 +22,14 @@ public class Main {
                 );
              */
 
-            Member member1 = new Member();
-            member1.setUserName("A");
-
-            Member member2 = new Member();
-            member2.setUserName("A");
-
-            Member member3 = new Member();
-            member3.setUserName("A");
-
             System.out.println("=============================");
 
-            em.persist(member1);    //50, 100
-            em.persist(member2);    //MEM
-            em.persist(member3);    //MEM
-
-            System.out.println("member1.id = " + member1.getId());
-            System.out.println("member2.id = " + member2.getId());
-            System.out.println("member3.id = " + member3.getId());
+            for(int i=0; i<99; i++){
+                Member member = new Member();
+                member.setUserName("A");
+                em.persist(member);
+                System.out.println("member.id = " + member.getId());
+            }
 
             System.out.println("=============================");
 
@@ -56,80 +46,34 @@ public class Main {
 }
 
 //특징
-//1. 테이블을 생성하여 사용하기 때문에 성능 이슈가 있음
-//2. 중요한 속성인 initialValue, allocationSize 속성은 SEQUENCE 전략의 속성 내용과 같음
+//1. DB에 적합한 전략을 선택
+//2. H2의 경우 시퀀스 전략을 많이 사용하므로 @SequenceGenerator 어노테이션 및 속성을 지정함
 
 //[실행 결과 - 콘솔]
-//Hibernate:
-//    create table MY_SEQUENCES (
-//        sequence_name varchar(255) not null,
-//        next_val bigint,
-//        primary key (sequence_name)
-//    )
-//Hibernate:
-//    insert into MY_SEQUENCES(sequence_name, next_val) values ('MEMBER_SEQ',0)
+//Hibernate: create sequence MEMBER_SEQ start with 1 increment by 50
 //=============================
 //Hibernate:
-//    select
-//        tbl.next_val
-//    from
-//        MY_SEQUENCES tbl
-//    where
-//        tbl.sequence_name=? for update
-//
+//    call next value for MEMBER_SEQ
 //Hibernate:
-//    update
-//        MY_SEQUENCES
-//    set
-//        next_val=?
-//    where
-//        next_val=?
-//        and sequence_name=?
+//    call next value for MEMBER_SEQ
+//member.id = 1
+//member.id = 2
+//member.id = 3
+//member.id = 4
+//member.id = 5
+//member.id = 6
+//...(생략)
+//member.id = 50
+//member.id = 51
 //Hibernate:
-//    select
-//        tbl.next_val
-//    from
-//        MY_SEQUENCES tbl
-//    where
-//        tbl.sequence_name=? for update
-//
-//Hibernate:
-//    update
-//        MY_SEQUENCES
-//    set
-//        next_val=?
-//    where
-//        next_val=?
-//        and sequence_name=?
-//member1.id = 1
-//member2.id = 2
-//member3.id = 3
+//call next value for MEMBER_SEQ
+//member.id = 52
+//...(생략)
+//member.id = 98
+//member.id = 99
 //=============================
-//Hibernate:
-//    /* insert hellojpa04.Member
-//         */ insert
-//    into
-//        Member
-//        (name, id)
-//    values
-//        (?, ?)
-//Hibernate:
-//    /* insert hellojpa04.Member
-//         */ insert
-//    into
-//        Member
-//        (name, id)
-//    values
-//        (?, ?)
-//Hibernate:
-//    /* insert hellojpa04.Member
-//          */ insert
-//    into
-//        Member
-//        (name, id)
-//    values
-//        (?, ?)
+//  (INSERT SQL 생략)
 
-//[실행 결과 - DB 테이블: MY_SEQUENCES ]
-//SEQUENCE_NAME  	NEXT_VAL
-//default	        100
+//[실행 결과 - DB 시퀀스: MY_SEQUENCES ]
+//현재 값    101
+//증가      50
