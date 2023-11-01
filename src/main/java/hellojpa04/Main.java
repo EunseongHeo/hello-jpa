@@ -22,11 +22,26 @@ public class Main {
                 );
              */
 
-            Member member = new Member();
-            member.setUsername("C");
-            System.out.println("============start==========");
-            em.persist(member);
-            System.out.println ("member.getId() = " + member.getId());
+            Member member1 = new Member();
+            member1.setUserName("A");
+
+            Member member2 = new Member();
+            member2.setUserName("A");
+
+            Member member3 = new Member();
+            member3.setUserName("A");
+
+            System.out.println("=============================");
+
+            em.persist(member1);
+            em.persist(member2);
+            em.persist(member3);
+
+            System.out.println("member1.id = " + member1.getId());
+            System.out.println("member2.id = " + member2.getId());
+            System.out.println("member3.id = " + member3.getId());
+
+            System.out.println("=============================");
 
             tx.commit();
         } catch (Exception e){
@@ -39,3 +54,77 @@ public class Main {
         emf.close();
     }
 }
+
+//[실행 결과 - 콘솔]
+//Hibernate:
+//        call next value for hibernate_sequence
+
+//===========================================================
+//  - hibernate_sequence: 하이버네이트가 만든 기본 시퀀스명
+//      - @SequenceGenerator을 통하여 sequenceName 지정 가능
+
+
+//[실행 결과 - 콘솔]
+//Hibernate: create sequence MEMBER_SEQ start with 1 increment by 1
+//Hibernate:
+//    call next value for MEMBER_SEQ
+//Hibernate:
+//    /* insert hellojpa04.Member
+//         */ insert
+//        into
+//            Member
+//            (name, id)
+//        values
+//            (?, ?)
+
+
+//===========================================================
+//  - 지정한 시퀀스명(MEMBER_SEQ)이 들어간 것을 확인할 수 있음
+
+
+//[콘솔 결과:  (allocationSize: 1 -> 50) ]
+//Hibernate: create sequence MEMBER_SEQ start with 1 increment by 50
+//=============================
+//Hibernate:
+//    call next value for MEMBER_SEQ
+//Hibernate:
+//    call next value for MEMBER_SEQ
+//member1.id = 1
+//member2.id = 2
+//member3.id = 3
+//=============================
+//Hibernate:
+//    /* insert hellojpa04.Member
+//        */ insert
+//        into
+//            Member
+//            (name, id)
+//        values
+//            (?, ?)
+//Hibernate:
+//    /* insert hellojpa04.Member
+//       */ insert
+//        into
+//            Member
+//            (name, id)
+//        values
+//            (?, ?)
+//Hibernate:
+//    /* insert hellojpa04.Member
+//         */ insert
+//        into
+//            Member
+//            (name, id)
+//        values
+//            (?, ?)
+
+//[DB 시퀀스 결과:  (allocationSize: 1 -> 50) ]
+// MEMBER_SEQ
+//     현재 값: 51
+//     증가: 50
+
+//[DB 결과: SELECT * FROM MEMBER ]
+//ID 	NAME
+//1	    A
+//2	    A
+//3	    A
